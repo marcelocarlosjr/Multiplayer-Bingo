@@ -5,13 +5,14 @@ using NETWORK_ENGINE;
 using UnityEngine.UI;
 using System.Linq;
 
-public class PlayerCharacter : NetworkComponent
+public class BingoController : NetworkComponent
 {
     public Text PlayerName;
     public string PName = "<Default>";
 
     public int[] bingoNumbers;
     public bool unique;
+    public bool[] WinningSpots;
 
     public override void HandleMessage(string flag, string value)
     {
@@ -19,6 +20,18 @@ public class PlayerCharacter : NetworkComponent
         {
             bingoNumbers = value.Split(',').Select(int.Parse).ToArray();
             UpdateBingoUI();
+        }
+
+       if(flag == "CORRECT" && IsClient)
+        {
+            int i = int.Parse(value);
+            Debug.Log(i);
+            UpdateBingoUI(i);
+        }
+       if(flag == "WINNER" && IsClient && value == "1")
+        {
+            this.transform.GetChild(0).GetChild(2).GetComponent<Image>().color = new Color32(0, 255, 0, 75);
+
         }
     }
 
@@ -51,21 +64,30 @@ public class PlayerCharacter : NetworkComponent
         }
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         bingoNumbers = new int[25];
+        WinningSpots = new bool[25];
         if (IsServer)
         {
             GenerateBingo(0);
         }
+
+        if (this.Owner == MyCore.LocalPlayerId)
+        {
+            this.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Text>().color = new Color(0, 140, 0);
+        }
+        else if(this.Owner != MyCore.LocalPlayerId)
+        {
+            this.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Text>().color = new Color(255, 0, 0);
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
         
     }
+
     public string IntArrayToString(int[] ints)
     {
         return string.Join(",", ints.Select(x => x.ToString()).ToArray());
@@ -77,6 +99,56 @@ public class PlayerCharacter : NetworkComponent
         {
             this.transform.GetChild(0).GetChild(1).GetChild(i).GetChild(0).GetComponent<Text>().text = bingoNumbers[i].ToString();
         }
+    }
+
+    public void UpdateBingoUI(int index)
+    {
+        this.transform.GetChild(0).GetChild(1).GetChild(index).GetComponent<Image>().color = new Color(0, 255, 0, 100);
+    }
+
+    public void CheckBingo(int num)
+    {
+        if (IsServer)
+        {
+            for (int i = 0; i < 25; i++)
+            {
+                if (bingoNumbers[i] == num)
+                {
+                    WinningSpots[i] = true;
+                    SendUpdate("CORRECT", i.ToString());
+                    CheckWinner(0,0);
+                }
+            }
+        }
+    }
+
+    public void CheckWinner(int r, int c)
+    {
+        if(r<=20 || c <= 4)
+        {
+            if (WinningSpots[0 + r] && WinningSpots[1 + r] && WinningSpots[2 + r] && WinningSpots[3 + r] && WinningSpots[4 + r])
+            {
+                FindObjectOfType<GameMaster>().WinnerSelected(this.Owner);
+            }
+            if (WinningSpots[0 + c] && WinningSpots[5 + c] && WinningSpots[10 + c] && WinningSpots[15 + c] && WinningSpots[20 + c])
+            {
+                FindObjectOfType<GameMaster>().WinnerSelected(this.Owner);
+            }
+            if (WinningSpots[0] && WinningSpots[6] && WinningSpots[12] && WinningSpots[18] && WinningSpots[24])
+            {
+                FindObjectOfType<GameMaster>().WinnerSelected(this.Owner);
+            }
+            if (WinningSpots[4] && WinningSpots[8] && WinningSpots[12] && WinningSpots[16] && WinningSpots[20])
+            {
+                FindObjectOfType<GameMaster>().WinnerSelected(this.Owner);
+            }
+            CheckWinner(r + 5, c + 1);
+        }
+    }
+
+    public void SetWinner()
+    {
+        SendUpdate("WINNER", "1");
     }
 
     public void GenerateBingo(int r)
