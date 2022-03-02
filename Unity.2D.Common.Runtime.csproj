@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{54FAE64C-AA48-DF27-F04C-6AD83CD3D3FD}</ProjectGuid>
+    <ProjectGuid>{BE7551AE-AE97-ACBA-93FE-EBE83C839F37}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Unity.2D.Common.Runtime</AssemblyName>

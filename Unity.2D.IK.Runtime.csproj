@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{15DE98AB-3AB9-C4FC-BA27-4EBB41F9B860}</ProjectGuid>
+    <ProjectGuid>{8DAB6C8B-22C8-5870-E6E7-1AE5E9270F8B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Unity.2D.IK.Runtime</AssemblyName>

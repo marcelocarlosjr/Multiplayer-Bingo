@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{7BE7F400-A518-1EDD-5067-693070DBDB26}</ProjectGuid>
+    <ProjectGuid>{9DB5763F-3BB3-8A27-8329-F882C83D9F74}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>PsdPlugin</AssemblyName>
@@ -710,11 +710,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="UnityEngine.TestRunner.csproj">
-      <Project>{B4472E4E-4C71-D22B-2853-6B3D4E347E8F}</Project>
+      <Project>{42079D64-00A9-ECBA-4AE6-1AE30A340FAB}</Project>
       <Name>UnityEngine.TestRunner</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEditor.TestRunner.csproj">
-      <Project>{52ACFC97-B305-B702-C527-83A863076186}</Project>
+      <Project>{67550C11-6081-3C98-1913-7B6B2E3483D9}</Project>
       <Name>UnityEditor.TestRunner</Name>
     </ProjectReference>
   </ItemGroup>
